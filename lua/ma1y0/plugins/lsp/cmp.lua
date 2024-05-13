@@ -50,14 +50,14 @@ return {
 		require("luasnip.loaders.from_vscode").lazy_load()
 
 		cmp.setup({
-			sorting = {
-				comparators = {
-					compare.recently_used,
-					compare.kind,
-					compare.exact,
-					compare.locality,
-				},
-			},
+			-- sorting = {
+			-- 	comparators = {
+			-- 		compare.recently_used,
+			-- 		compare.kind,
+			-- 		compare.exact,
+			-- 		compare.locality,
+			-- 	},
+			-- },
 			completion = {
 				completeopt = "menu,menuone,preview,noselect",
 			},
@@ -104,10 +104,10 @@ return {
 			}),
 			-- sources for autocompletion
 			sources = cmp.config.sources({
-				{ name = "nvim_lsp", priority = 100 },
-				{ name = "luasnip", priority = 80 }, -- snippets
-				{ name = "buffer", priority = 80 }, -- text within current buffer
-				{ name = "path", priority = 80 }, -- file system paths
+				{ name = "nvim_lsp" },
+				{ name = "luasnip" }, -- snippets
+				{ name = "buffer" }, -- text within current buffer
+				{ name = "path" }, -- file system paths
 			}),
 			window = {
 				completion = {

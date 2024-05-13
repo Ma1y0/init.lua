@@ -3,9 +3,11 @@ return {
 	tag = "0.1.6", -- or                              , branch = '0.1.x',
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		"nvim-tree/nvim-web-devicons", -- fster back-end
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- Faster backend
+		"nvim-tree/nvim-web-devicons",
 		"nvim-treesitter/nvim-treesitter",
+		{ "nvim-telescope/telescope-smart-history.nvim" },
+		{ "kkharji/sqlite.lua" },
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -45,10 +47,15 @@ return {
 				borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
 				color_devicons = true,
 				-- Developer configurations: Not meant for general override
+				history = {
+					path = "~/.local/share/nvim/databases/telescope_history.sqlite3",
+					limit = 100,
+				},
 			},
 		})
 
 		telescope.load_extension("fzf")
+		telescope.load_extension("smart_history")
 
 		-- set keymaps
 		local keymap = vim.keymap -- for conciseness

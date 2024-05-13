@@ -33,7 +33,7 @@ return {
 				"pyright",
 				-- "vls",
 				"elixirls",
-				-- "zls",
+				"zls",
 				-- "astro",
 				-- "asm_lsp",
 				"jdtls",

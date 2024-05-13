@@ -83,6 +83,12 @@ return {
 			},
 		})
 
+		-- Zig lsp
+		lspconfig.zls.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+		})
+
 		-- Rust lsp
 		lspconfig.rust_analyzer.setup({
 			on_attach = on_attach,
@@ -113,7 +119,7 @@ return {
 			on_attach = on_attach,
 		})
 
-		-- c lsp
+		-- C lsp
 		lspconfig.clangd.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,

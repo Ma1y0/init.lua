@@ -16,4 +16,6 @@ require("lazy").setup({
 	{ import = "ma1y0.plugins.lsp" },
 	{ import = "ma1y0.plugins.treesitter" },
 	{ import = "ma1y0.plugins.navigation" },
+}, {
+	notify = false,
 })
