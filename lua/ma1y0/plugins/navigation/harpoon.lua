@@ -1,27 +1,23 @@
 return {
 	"ThePrimeagen/harpoon",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-	},
+	branch = "harpoon2",
+	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
-		local ui = require("harpoon.ui")
-		local mark = require("harpoon.mark")
-		local keymap = vim.keymap
+		local harpoon = require("harpoon")
+		harpoon:setup()
 
-		keymap.set("n", "<leader>a", mark.add_file, { desc = "Add file to harpoon" })
-		keymap.set("n", "<C-a>", ui.toggle_quick_menu, { desc = "Show list of harpoon files" })
+		vim.keymap.set("n", "<leader>a", function()
+			harpoon:list():add()
+		end, { desc = "Add file to harpoon" })
 
-		keymap.set("n", "<C-h>", function()
-			ui.nav_file(1)
-		end)
-		keymap.set("n", "<C-j>", function()
-			ui.nav_file(2)
-		end)
-		keymap.set("n", "<C-k>", function()
-			ui.nav_file(3)
-		end)
-		keymap.set("n", "<C-l>", function()
-			ui.nav_file(4)
-		end)
+		vim.keymap.set("n", "<C-a>", function()
+			harpoon.ui:toggle_quick_menu(harpoon:list())
+		end, { desc = "Show list of harpoon files" })
+
+		for _, idx in ipairs({ 1, 2, 3, 4, 5 }) do
+			vim.keymap.set("n", string.format("<space>%d", idx), function()
+				harpoon:list():select(idx)
+			end, { desc = string.format("Harpoon file %d", idx) })
+		end
 	end,
 }

@@ -1,7 +1,9 @@
 local set = vim.opt_local
 
+vim.api.nvim_create_augroup("custom-term-open", {})
+
 vim.api.nvim_create_autocmd("TermOpen", {
-	group = vim.api.nvim_create_augroup("custom-term-open", {}),
+	group = "custom-term-open",
 	callback = function()
 		set.number = false
 		set.relativenumber = false
@@ -11,8 +13,17 @@ vim.api.nvim_create_autocmd("TermOpen", {
 	end,
 })
 
+-- Auto insert mode in terminal
+vim.api.nvim_create_autocmd("BufEnter", {
+	group = "custom-term-open",
+	pattern = "term://*",
+	callback = function()
+		vim.cmd("startinsert")
+	end,
+})
+
 -- Easily hit escape in terminal mode.
-vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
+vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
 
 -- Opens terminal at the bottom
 vim.keymap.set("n", "<leader>tb", function()
