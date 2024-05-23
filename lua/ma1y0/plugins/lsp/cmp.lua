@@ -18,6 +18,7 @@ return {
 
 		local WIDE_HEIGHT = 60
 
+		-- Open zo close zc
 		local kind_icons = {
 			Text = "",
 			Method = "󰆧",

@@ -5,6 +5,7 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
+		{ "j-hui/fidget.nvim", opts = {} }, -- Lsp notifications
 	},
 
 	config = function()
@@ -14,58 +15,40 @@ return {
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-		local keymap = vim.keymap -- for conciseness
+		vim.api.nvim_create_autocmd("LspAttach", {
+			callback = function(args)
+				local bufnr = args.buf
+				local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
 
-		local opts = { noremap = true, silent = true }
-		local on_attach = function(client, bufnr)
-			opts.buffer = bufnr
-			-- set keybinds
-			opts.desc = "Show LSP references"
-			keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+				vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
+				vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = 0, desc = "Go to definition" })
+				vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = 0, desc = "Go to references" })
+				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = 0, desc = "Go to definition" })
+				vim.keymap.set("n", "gT", vim.lsp.buf.type_definition, { buffer = 0, desc = "Go to type definition" })
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
+				vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+				vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+				vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
+				vim.keymap.set(
+					"n",
+					"<leader>D",
+					"<cmd>Telescope diagnostics bufnr=0<CR>",
+					{ desc = "Show buffer diagnostics" }
+				)
 
-			opts.desc = "Go to declaration"
-			keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
-
-			opts.desc = "Show LSP definitions"
-			keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
-
-			opts.desc = "Show LSP implementations"
-			keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
-
-			opts.desc = "Show LSP type definitions"
-			keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
-
-			opts.desc = "See available code actions"
-			keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
-
-			opts.desc = "Smart rename"
-			keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
-
-			opts.desc = "Show buffer diagnostics"
-			keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
-
-			opts.desc = "Show line diagnostics"
-			keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
-
-			opts.desc = "Go to previous diagnostic"
-			keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
-
-			opts.desc = "Go to next diagnostic"
-			keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
-
-			opts.desc = "Show documentation for what is under cursor"
-			keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
-
-			opts.desc = "Restart LSP"
-			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-		end
+				vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, { buffer = 0, desc = "Lsp rename" })
+				vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, { buffer = 0, desc = "Lsp code actions" })
+				vim.keymap.set("n", "<leader>rs", ":LspRestart<CR>", { desc = "Restart lsp" })
+			end,
+		})
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
+
+		-- Rust and Haskell are configured in separate files
 
 		-- Lua lsp
 		lspconfig.lua_ls.setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
 			settings = { -- custom settings for lua
 				Lua = {
 					-- make the language server recognize "vim" global
@@ -85,74 +68,57 @@ return {
 
 		-- Zig lsp
 		lspconfig.zls.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
-
-		-- Rust lsp
-		lspconfig.rust_analyzer.setup({
-			on_attach = on_attach,
 			capabilities = capabilities,
 		})
 
 		-- Java lsp
 		lspconfig.jdtls.setup({
-			on_attach = on_attach,
 			capabilities = capabilities,
 		})
 
 		-- CSS lsp
 		lspconfig.cssls.setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
 		})
 
 		-- TS lsp
 		lspconfig.tsserver.setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
 		})
 
 		-- Tailwind lsp
 		lspconfig.tailwindcss.setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
 		})
 
 		-- C lsp
 		lspconfig.clangd.setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
 		})
 
 		-- Go lsp
 		lspconfig.gopls.setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
 		})
 
 		-- Elixir lsp
 		lspconfig.elixirls.setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
 			cmd = { "/home/ma1y0/.local/share/nvim/mason/bin/elixir-ls" },
 		})
 
 		-- Python lsp
 		lspconfig.pyright.setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
 		})
 
 		-- Docker lsp
 		lspconfig.docker_compose_language_service.setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
 		})
 
 		lspconfig.dockerls.setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
 		})
 	end,
 }
