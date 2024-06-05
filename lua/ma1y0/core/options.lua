@@ -56,3 +56,6 @@ vim.opt.updatetime = 250
 -- Spell check
 vim.opt.spelllang = "en_us"
 vim.opt.spell = true
+
+-- Folds
+vim.opt.foldmethod = "marker"
