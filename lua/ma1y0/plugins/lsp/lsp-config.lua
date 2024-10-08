@@ -74,6 +74,11 @@ return {
 		-- Java lsp
 		lspconfig.jdtls.setup({
 			capabilities = capabilities,
+			handlers = {
+				-- By assigning an empty function, you can remove the notifications
+				-- printed to the cmd
+				["$/progress"] = function(_, result, ctx) end,
+			},
 		})
 
 		-- CSS lsp
@@ -81,8 +86,16 @@ return {
 			capabilities = capabilities,
 		})
 
-		-- TS lsp
-		lspconfig.tsserver.setup({
+		-- TS/JS lsp
+		lspconfig.ts_ls.setup({
+			capabilities = capabilities,
+		})
+
+		-- lspconfig.denols.setup({
+		-- 	capabilities = capabilities,
+		-- })
+
+		lspconfig.eslint.setup({
 			capabilities = capabilities,
 		})
 
@@ -118,6 +131,16 @@ return {
 		})
 
 		lspconfig.dockerls.setup({
+			capabilities = capabilities,
+		})
+
+		-- Assembly
+		lspconfig.asm_lsp.setup({
+			capabilities = capabilities,
+		})
+
+		-- Kotlin
+		lspconfig.kotlin_language_server.setup({
 			capabilities = capabilities,
 		})
 	end,

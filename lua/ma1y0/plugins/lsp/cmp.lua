@@ -14,7 +14,6 @@ return {
 		local cmp = require("cmp")
 
 		local luasnip = require("luasnip")
-		local compare = require("cmp.config.compare")
 
 		local WIDE_HEIGHT = 60
 

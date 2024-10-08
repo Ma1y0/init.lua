@@ -20,16 +20,18 @@ return {
 			-- list of servers for mason to install
 			ensure_installed = {
 				"lua_ls",
+				"ts_ls",
+				"kotlin_language_server",
 				"clangd",
 				"rust_analyzer",
 				"gopls",
-				"tsserver",
 				"cssls",
 				"tailwindcss",
 				"pyright",
 				"elixirls",
 				"zls",
 				"jdtls",
+				"denols",
 				"hls",
 			},
 			-- auto-install configured servers (with lspconfig)
@@ -44,7 +46,7 @@ return {
 				"isort", -- python formatter
 				"black", -- python formatter
 				"pylint", -- python linter
-				"eslint_d", -- js linter
+				-- "eslint_d", -- js linter
 				"clang-format", -- c formatter
 			},
 		})
