@@ -19,10 +19,10 @@ return {
 				markdown = { "prettierd" },
 				graphql = { "prettierd" },
 				lua = { "stylua" },
-				python = { "isort", "black" },
+				python = { "isort", "black", "ruff" },
 				asm = { "asmftm" },
 			},
-			format_on_save = {
+			format_after_save = {
 				lsp_fallback = true,
 				async = true,
 				timeout_ms = 200,

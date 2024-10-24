@@ -89,14 +89,17 @@ return {
 		-- TS/JS lsp
 		lspconfig.ts_ls.setup({
 			capabilities = capabilities,
+			root_dir = lspconfig.util.root_pattern("package.json"),
 		})
-
+		--
 		-- lspconfig.denols.setup({
 		-- 	capabilities = capabilities,
+		-- 	root_dir = lspconfig.util.root_pattern("deno.json"),
 		-- })
 
 		lspconfig.eslint.setup({
 			capabilities = capabilities,
+			root_dir = lspconfig.util.root_pattern("package.json"),
 		})
 
 		-- Tailwind lsp
