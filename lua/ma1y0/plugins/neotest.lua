@@ -9,12 +9,14 @@ return {
 		"rouge8/neotest-rust", -- Rust adapter
 		"jfpedroza/neotest-elixir", -- Elixir adapter
 		"nvim-neotest/neotest-go", -- Go adapter
+		"markemmons/neotest-deno", -- Deno adapter
 	},
 	config = function()
 		local neotest = require("neotest")
 
 		neotest.setup({
 			adapters = {
+				require("neotest-deno"),
 				require("neotest-rust")({
 					-- Optional args for rust adapter
 					args = {

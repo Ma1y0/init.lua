@@ -20,7 +20,7 @@ return {
 				graphql = { "prettierd" },
 				lua = { "stylua" },
 				python = { "isort", "black", "ruff" },
-				asm = { "asmftm" },
+				asm = { "asm-fmt" },
 			},
 			format_after_save = {
 				lsp_fallback = true,

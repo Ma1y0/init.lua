@@ -37,6 +37,7 @@ vim.opt.scrolloff = 10
 
 -- alias :W -> :w
 vim.cmd([[cabbrev W w]])
+vim.cmd([[cabbrev Wqa wqa]])
 
 -- cmp
 vim.opt.completeopt = { "menu", "menuone", "noselect" }

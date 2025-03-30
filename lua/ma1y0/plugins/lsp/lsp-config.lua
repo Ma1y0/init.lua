@@ -91,7 +91,7 @@ return {
 			capabilities = capabilities,
 			root_dir = lspconfig.util.root_pattern("package.json"),
 		})
-		--
+
 		-- lspconfig.denols.setup({
 		-- 	capabilities = capabilities,
 		-- 	root_dir = lspconfig.util.root_pattern("deno.json"),
@@ -137,13 +137,13 @@ return {
 			capabilities = capabilities,
 		})
 
-		-- Assembly
-		lspconfig.asm_lsp.setup({
+		-- Kotlin
+		lspconfig.kotlin_language_server.setup({
 			capabilities = capabilities,
 		})
 
-		-- Kotlin
-		lspconfig.kotlin_language_server.setup({
+		-- Cmake
+		lspconfig.cmake.setup({
 			capabilities = capabilities,
 		})
 	end,
